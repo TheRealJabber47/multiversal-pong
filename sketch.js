@@ -13,7 +13,7 @@ let winner = ""
 let colorR = [0, 255, 0]
 let colorL = [0, 0, 255]
 let winnerColor = [255, 255, 255]
-let gameType = ["vanilla", "multiball"]
+let gameType = ["vanilla", "multiball", "laserball"]
 let gameTypeIndex = 0
 let shuffle = false
 let LsliderR
@@ -22,10 +22,15 @@ let LsliderB
 let RsliderR
 let RsliderG
 let RsliderB
+let leftPaddle, rightPaddle;
 
 function setup() {
   // setup
   createCanvas(800, 600)
+
+  leftPaddle = new PaddleShooter(30, height / 2, 5); // Left paddle shooting right
+  rightPaddle = new PaddleShooter(width - 30, height / 2, -5); // Right paddle shooting left
+
   paddleLX = 100
   paddleRX = width - paddleLX
   paddleLY = height / 2
@@ -78,6 +83,8 @@ function draw() {
     drawWinScreen()
   } else if (screen == "rgbpicker") {
     rgbPicker()
+  } else if (screen == "laserball"){
+    laserBall()
   }
 }
 
@@ -109,12 +116,12 @@ function drawMenu() {
 function multiBall() {
   // multi ball map
   background(220)
-  balls = 2
+  balls = Math.floor(random(2, 5))
 
   if (begin) {
     circles = []
     for (let i = 0; i < balls; i++) {
-      circles.push(new Circle(random(width / 4, width * 3 / 4), random(height / 4, height * 3 / 4), ballSize))
+      circles.push(new Circle(random(width / 3, width * 2 / 3), random(height / 3, height * 2 / 3), ballSize))
     }
     begin = false
   }
@@ -179,7 +186,7 @@ function drawSettingsButton() {
   fill(255)
   textSize(20)
   textAlign(CENTER, CENTER)
-  text("⚙️", width - 25, 25)
+  text("⚙️", width - 24, 26)
 }
 
 function drawSettingsMenu() {
@@ -396,11 +403,50 @@ function rgbPicker() {
     fill(0);
   }
   text(lColorName[1], 175, 100)
-  
+
   if (Rr < 100 && Rg < 125 && Rb < 125) {
     fill(255);
   } else {
     fill(0);
   }
   text(rColorName[1], 575, 100)
+}
+
+function laserBall(){
+  background(0);
+  fill(colorL)
+  leftPaddle.display();
+  fill(colorR)
+  rightPaddle.display();
+  leftPaddle.updateProjectiles();
+  rightPaddle.updateProjectiles();
+
+  // Left paddle movement (W/S keys)
+  if (keyIsDown(87)) { // 'W' key
+    leftPaddle.move(-1);
+  }
+  if (keyIsDown(83)) { // 'S' key
+    leftPaddle.move(1);
+  }
+
+  // Right paddle movement (UP/DOWN arrow keys)
+  if (keyIsDown(UP_ARROW)) {
+    rightPaddle.move(-1);
+  }
+  if (keyIsDown(DOWN_ARROW)) {
+    rightPaddle.move(1);
+  }
+
+}
+
+function laser(){
+
+}
+function keyPressed() {
+  if (key === 'D' || key === 'd') {
+    leftPaddle.shoot(); // Left paddle shoots with 'D
+  }
+  if (key === LEFT_ARROW) {
+    rightPaddle.shoot(); // Right paddle shoots with 'L'
+  }
 }

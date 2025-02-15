@@ -19,17 +19,19 @@ class Circle {
         this.movementY *= -1;
       }
       if (this.x - this.r <= 0) {
+        let rColorName = ntc.name(rgbToHex(colorR[0], colorR[1], colorR[2]))
         scoreR++;
         screen = "win";
-        winner = "Green Wins!";
-        winnerColor = [0, 255, 0];
+        winner = rColorName+ " Wins!";
+        winnerColor = colorR;
         resetBalls();
       }
       if (this.x + this.r >= width) {
+        let lColorName = ntc.name(rgbToHex(colorL[0], colorL[1], colorL[2]))
         scoreL++;
         screen = "win";
-        winner = "Blue Wins!";
-        winnerColor = [0, 0, 255];
+        winner = lColorName[1]+ " Wins!";
+        winnerColor = colorL;
         resetBalls();
       }
       if (collideRectCircle(paddleRX, paddleRY, paddleWidth, paddleHeight, this.x, this.y, this.r * 2)) {
