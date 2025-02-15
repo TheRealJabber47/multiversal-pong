@@ -444,9 +444,9 @@ function laser(){
 }
 function keyPressed() {
   if (key === 'D' || key === 'd') {
-    leftPaddle.shoot(); // Left paddle shoots with 'D
+    leftPaddle.shoot(); // Left paddle shoots with 'D'
   }
-  if (key === LEFT_ARROW) {
-    rightPaddle.shoot(); // Right paddle shoots with 'L'
+  if (keyCode === LEFT_ARROW) {
+    rightPaddle.shoot(); // Right paddle shoots with left arrow key
   }
 }
