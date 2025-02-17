@@ -22,7 +22,7 @@ class Circle {
         let rColorName = ntc.name(rgbToHex(colorR[0], colorR[1], colorR[2]))
         scoreR++;
         screen = "win";
-        winner = rColorName+ " Wins!";
+        winner = rColorName[1]+ " Wins!"
         winnerColor = colorR;
         resetBalls();
       }
@@ -30,7 +30,7 @@ class Circle {
         let lColorName = ntc.name(rgbToHex(colorL[0], colorL[1], colorL[2]))
         scoreL++;
         screen = "win";
-        winner = lColorName[1]+ " Wins!";
+        winner = lColorName[1]+ " Wins!"
         winnerColor = colorL;
         resetBalls();
       }

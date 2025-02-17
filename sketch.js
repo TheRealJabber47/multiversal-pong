@@ -23,10 +23,22 @@ let RsliderR
 let RsliderG
 let RsliderB
 let leftPaddle, rightPaddle;
+let player;
+let bones = [];
+let blasters = [];
+let battleBox = { x: 100, y: 100, w: 300, h: 200 };
+let health = 100;
+let sansImage
+
+function preload() {
+  sansImage = loadImage("/assets/sans.png");
+}
 
 function setup() {
   // setup
   createCanvas(800, 600)
+
+  player = new Player();
 
   leftPaddle = new PaddleShooter(30, height / 2, 5); // Left paddle shooting right
   rightPaddle = new PaddleShooter(width - 30, height / 2, -5); // Right paddle shooting left
@@ -75,6 +87,8 @@ function draw() {
   } else if (screen == "menu") {
     drawMenu()
     drawSettingsButton()
+    if(collidePointRect(mouseX, mouseY,10, 10, 30, 30))
+    drawSansButton()
   } else if (screen == "multiball") {
     multiBall()
   } else if (screen == "vanilla") {
@@ -83,18 +97,22 @@ function draw() {
     drawWinScreen()
   } else if (screen == "rgbpicker") {
     rgbPicker()
-  } else if (screen == "laserball"){
+  } else if (screen == "laserball") {
     laserBall()
+  } else if (screen == "sans") {
+    sans()
   }
 }
 
 function drawMenu() {
   //main menu
+  paddleLY = height / 2
+  paddleRY = height / 2
   background(0)
   fill(255)
   textSize(35)
   textAlign(CENTER)
-  text("Ultimate Pong", width / 2, height / 4)
+  text("Multiversal Pong", width / 2, height / 4)
 
   let buttonX = width / 3
   let buttonY = height / 2
@@ -189,6 +207,13 @@ function drawSettingsButton() {
   text("⚙️", width - 24, 26)
 }
 
+function drawSansButton(){
+  //sans button
+  sansImage.resize(25,25)
+  image(sansImage, 12.5, 12.5)
+
+}
+
 function drawSettingsMenu() {
   let style = ""
   style = shuffle ? "random" : "pick"
@@ -273,6 +298,10 @@ function mousePressed() {
       //opens settings
       screen = "settings"
     }
+    if (collidePointRect(mouseX, mouseY, 10, 10, 30, 30)) {
+      //opens settings
+      screen = "sans"
+    }
   }
   if (screen == "rgbpicker") {
     if (collidePointRect(mouseX, mouseY, width / 2 - 60, 505, 120, 40)) {
@@ -326,7 +355,6 @@ function scoreboard() {
   textAlign(CENTER)
   text("Score\n" + scoreL + " - " + scoreR, width / 2, height / 11)
 }
-
 
 function resolveCollision(thisObj, otherObj, mindistance) {
   //ball x ball collision
@@ -412,7 +440,7 @@ function rgbPicker() {
   text(rColorName[1], 575, 100)
 }
 
-function laserBall(){
+function laserBall() {
   background(0);
   fill(colorL)
   leftPaddle.display();
@@ -439,9 +467,10 @@ function laserBall(){
 
 }
 
-function laser(){
+function laser() {
 
 }
+
 function keyPressed() {
   if (key === 'D' || key === 'd') {
     leftPaddle.shoot(); // Left paddle shoots with 'D'
@@ -449,4 +478,55 @@ function keyPressed() {
   if (keyCode === LEFT_ARROW) {
     rightPaddle.shoot(); // Right paddle shoots with left arrow key
   }
+}
+
+function sans() {
+  background(0);
+  drawBattleBox();
+  player.update();
+  player.show();
+
+  // Handle bones
+  if (frameCount % 60 === 0) {
+    bones.push(new Bone(random(battleBox.x, battleBox.x + battleBox.w), battleBox.y));
+  }
+  for (let i = bones.length - 1; i >= 0; i--) {
+    bones[i].update();
+    bones[i].show();
+    if (bones[i].hits(player)) {
+      health -= 5;
+    }
+    if (bones[i].offscreen()) {
+      bones.splice(i, 1);
+    }
+  }
+
+  // Handle blasters
+  if (frameCount % 180 === 0) {
+    blasters.push(new Blaster(battleBox.x, random(battleBox.y, battleBox.y + battleBox.h)));
+  }
+  for (let i = blasters.length - 1; i >= 0; i--) {
+    blasters[i].update();
+    blasters[i].show();
+    if (blasters[i].hits(player)) {
+      health -= 10;
+    }
+    if (blasters[i].offscreen()) {
+      blasters.splice(i, 1);
+    }
+  }
+
+  drawHealth();
+}
+
+
+function drawBattleBox() {
+  noFill();
+  stroke(255);
+  rect(battleBox.x, battleBox.y, battleBox.w, battleBox.h);
+}
+
+function drawHealth() {
+  fill(255, 0, 0);
+  rect(10, 10, health * 2, 10);
 }
