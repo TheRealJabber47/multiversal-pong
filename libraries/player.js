@@ -19,7 +19,7 @@ class Player {
     ellipse(this.x, this.y, this.size);
   }
   
-  collides(proj) {
-    return dist(this.x, this.y, proj.x, proj.y) < this.size / 2 + proj.size / 2;
+  collides(obj) {
+    return dist(this.x, this.y, obj.x, obj.y) < this.size / 2 + obj.size / 2;
   }
 }

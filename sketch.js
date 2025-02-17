@@ -23,17 +23,16 @@ let RsliderR
 let RsliderG
 let RsliderB
 let leftPaddle, rightPaddle;
-let player;
 let bones = [];
 let blasters = [];
 let battleBox = { x: 100, y: 100, w: 300, h: 200 };
 let sansImage
 
+let player;
 let boss;
-let projectiles = [];
+let attacks = [];
 let gameOver = false;
 let lives = 3;
-
 
 // loads images
 function preload() {
@@ -501,7 +500,7 @@ function drawHealth() {
 
 function bossFight() {
   background(0);
-
+  
   if (gameOver) {
     fill(255, 0, 0);
     textSize(32);
@@ -509,56 +508,31 @@ function bossFight() {
     text("Game Over", width / 2, height / 2);
     return;
   }
+  
   fill(255);
   textSize(16);
   textAlign(LEFT, TOP);
   text("Lives: " + lives, 10, 10);
-  return;
-}
 
-player.update();
-player.display();
-
-boss.update();
-boss.display();
-
-for (let i = projectiles.length - 1; i >= 0; i--) {
-  projectiles[i].update();
-  projectiles[i].display();
-
-  if (player.collides(projectiles[i])) {
-    lives--;
-    if (lives <= 0) {
-      gameOver = true;
+  player.update();
+  player.display();
+  
+  boss.update();
+  boss.display();
+  
+  for (let i = attacks.length - 1; i >= 0; i--) {
+    attacks[i].update();
+    attacks[i].display();
+    
+    if (player.collides(attacks[i])) {
+      lives--;
+      if (lives <= 0) {
+        gameOver = true;
+      }
     }
-  }
-
-  if (projectiles[i].offscreen()) {
-    projectiles.splice(i, 1);
-  }
-}
-
-for (let i = blasters.length - 1; i >= 0; i--) {
-  blasters[i].update();
-  blasters[i].display();
-
-  if (player.collides(blasters[i])) {
-    lives--;
-    if (lives <= 0) {
-      gameOver = true;
+    
+    if (attacks[i].offscreen()) {
+      attacks.splice(i, 1);
     }
   }
 }
-
-for (let i = bones.length - 1; i >= 0; i--) {
-  bones[i].update();
-  bones[i].display();
-
-  if (player.collides(bones[i])) {
-    lives--;
-    if (lives <= 0) {
-      gameOver = true;
-    }
-  }
-}
-
