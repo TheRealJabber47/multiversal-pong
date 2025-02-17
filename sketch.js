@@ -28,13 +28,13 @@ let bones = [];
 let blasters = [];
 let battleBox = { x: 100, y: 100, w: 300, h: 200 };
 let health = 100;
-let sansImage
+// let sansImage
 
 
 //loads images
-function preload() {
-  sansImage = loadImage("/libraries/sans.png");
-}
+// function preload() {
+//   sansImage = loadImage("/assets/sans.png");
+// }
 
 function setup() {
   // setup
