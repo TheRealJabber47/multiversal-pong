@@ -30,6 +30,8 @@ let battleBox = { x: 100, y: 100, w: 300, h: 200 };
 let health = 100;
 let sansImage
 
+
+//loads images
 function preload() {
   sansImage = loadImage("/assets/sans.png");
 }
