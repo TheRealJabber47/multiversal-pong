@@ -1,31 +1,17 @@
 class Bone {
-  constructor(x, y) {
+  constructor(x, y, vy) {
     this.x = x;
     this.y = y;
-    this.w = 10;
-    this.h = 30;
-    this.speed = 3;
+    this.vy = vy;
+    this.size = 20;
   }
-
+  
   update() {
-    this.y += this.speed;
+    this.y += this.vy;
   }
-
-  show() {
+  
+  display() {
     fill(255);
-    rect(this.x, this.y, this.w, this.h);
-  }
-
-  hits(player) {
-    return (
-      player.x < this.x + this.w &&
-      player.x + player.size > this.x &&
-      player.y < this.y + this.h &&
-      player.y + player.size > this.y
-    );
-  }
-
-  offscreen() {
-    return this.y > height;
+    rect(this.x, this.y, this.size, this.size * 2);
   }
 }

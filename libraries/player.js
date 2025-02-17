@@ -1,19 +1,25 @@
 class Player {
   constructor() {
-    this.x = battleBox.x + battleBox.w / 2;
-    this.y = battleBox.y + battleBox.h / 2;
+    this.x = width / 2;
+    this.y = height - 40;
     this.size = 20;
   }
-
+  
   update() {
-    if (keyIsDown(LEFT_ARROW) && this.x > battleBox.x) this.x -= 3;
-    if (keyIsDown(RIGHT_ARROW) && this.x < battleBox.x + battleBox.w - this.size) this.x += 3;
-    if (keyIsDown(UP_ARROW) && this.y > battleBox.y) this.y -= 3;
-    if (keyIsDown(DOWN_ARROW) && this.y < battleBox.y + battleBox.h - this.size) this.y += 3;
+    if (keyIsDown(LEFT_ARROW)) this.x -= 5;
+    if (keyIsDown(RIGHT_ARROW)) this.x += 5;
+    if (keyIsDown(UP_ARROW)) this.y -= 5;
+    if (keyIsDown(DOWN_ARROW)) this.y += 5;
+    this.x = constrain(this.x, 0, width);
+    this.y = constrain(this.y, 0, height);
   }
-
-  show() {
-    fill(0, 0, 255);
-    rect(this.x, this.y, this.size, this.size);
+  
+  display() {
+    fill(0, 255, 0);
+    ellipse(this.x, this.y, this.size);
+  }
+  
+  collides(proj) {
+    return dist(this.x, this.y, proj.x, proj.y) < this.size / 2 + proj.size / 2;
   }
 }

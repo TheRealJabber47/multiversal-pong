@@ -27,20 +27,25 @@ let player;
 let bones = [];
 let blasters = [];
 let battleBox = { x: 100, y: 100, w: 300, h: 200 };
-let health = 100;
-// let sansImage
+let sansImage
+
+let boss;
+let projectiles = [];
+let gameOver = false;
+let lives = 3;
 
 
-//loads images
-// function preload() {
-//   sansImage = loadImage("/assets/sans.png");
-// }
+// loads images
+function preload() {
+  sansImage = loadImage("/assets/sans.png");
+}
 
 function setup() {
   // setup
   createCanvas(800, 600)
 
   player = new Player();
+  boss = new Boss();
 
   leftPaddle = new PaddleShooter(30, height / 2, 5); // Left paddle shooting right
   rightPaddle = new PaddleShooter(width - 30, height / 2, -5); // Right paddle shooting left
@@ -89,8 +94,8 @@ function draw() {
   } else if (screen == "menu") {
     drawMenu()
     drawSettingsButton()
-    if(collidePointRect(mouseX, mouseY,10, 10, 30, 30))
-    drawSansButton()
+    if (collidePointRect(mouseX, mouseY, 10, 10, 30, 30))
+      drawSansButton()
   } else if (screen == "multiball") {
     multiBall()
   } else if (screen == "vanilla") {
@@ -102,7 +107,7 @@ function draw() {
   } else if (screen == "laserball") {
     laserBall()
   } else if (screen == "sans") {
-    sans()
+    bossFight()
   }
 }
 
@@ -209,10 +214,10 @@ function drawSettingsButton() {
   text("⚙️", width - 24, 26)
 }
 
-function drawSansButton(){
-  //sans button
-  // sansImage.resize(25,25)
-  // image(sansImage, 12.5, 12.5)
+function drawSansButton() {
+  // sans button
+  sansImage.resize(25, 25)
+  image(sansImage, 12.5, 12.5)
 
 }
 
@@ -482,45 +487,6 @@ function keyPressed() {
   }
 }
 
-function sans() {
-  background(0);
-  drawBattleBox();
-  player.update();
-  player.show();
-
-  // Handle bones
-  if (frameCount % 60 === 0) {
-    bones.push(new Bone(random(battleBox.x, battleBox.x + battleBox.w), battleBox.y));
-  }
-  for (let i = bones.length - 1; i >= 0; i--) {
-    bones[i].update();
-    bones[i].show();
-    if (bones[i].hits(player)) {
-      health -= 5;
-    }
-    if (bones[i].offscreen()) {
-      bones.splice(i, 1);
-    }
-  }
-
-  // Handle blasters
-  if (frameCount % 180 === 0) {
-    blasters.push(new Blaster(battleBox.x, random(battleBox.y, battleBox.y + battleBox.h)));
-  }
-  for (let i = blasters.length - 1; i >= 0; i--) {
-    blasters[i].update();
-    blasters[i].show();
-    if (blasters[i].hits(player)) {
-      health -= 10;
-    }
-    if (blasters[i].offscreen()) {
-      blasters.splice(i, 1);
-    }
-  }
-
-  drawHealth();
-}
-
 
 function drawBattleBox() {
   noFill();
@@ -532,3 +498,67 @@ function drawHealth() {
   fill(255, 0, 0);
   rect(10, 10, health * 2, 10);
 }
+
+function bossFight() {
+  background(0);
+
+  if (gameOver) {
+    fill(255, 0, 0);
+    textSize(32);
+    textAlign(CENTER, CENTER);
+    text("Game Over", width / 2, height / 2);
+    return;
+  }
+  fill(255);
+  textSize(16);
+  textAlign(LEFT, TOP);
+  text("Lives: " + lives, 10, 10);
+  return;
+}
+
+player.update();
+player.display();
+
+boss.update();
+boss.display();
+
+for (let i = projectiles.length - 1; i >= 0; i--) {
+  projectiles[i].update();
+  projectiles[i].display();
+
+  if (player.collides(projectiles[i])) {
+    lives--;
+    if (lives <= 0) {
+      gameOver = true;
+    }
+  }
+
+  if (projectiles[i].offscreen()) {
+    projectiles.splice(i, 1);
+  }
+}
+
+for (let i = blasters.length - 1; i >= 0; i--) {
+  blasters[i].update();
+  blasters[i].display();
+
+  if (player.collides(blasters[i])) {
+    lives--;
+    if (lives <= 0) {
+      gameOver = true;
+    }
+  }
+}
+
+for (let i = bones.length - 1; i >= 0; i--) {
+  bones[i].update();
+  bones[i].display();
+
+  if (player.collides(bones[i])) {
+    lives--;
+    if (lives <= 0) {
+      gameOver = true;
+    }
+  }
+}
+
