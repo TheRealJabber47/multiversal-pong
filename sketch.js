@@ -211,8 +211,8 @@ function drawSettingsButton() {
 
 function drawSansButton(){
   //sans button
-  sansImage.resize(25,25)
-  image(sansImage, 12.5, 12.5)
+  // sansImage.resize(25,25)
+  // image(sansImage, 12.5, 12.5)
 
 }
 
