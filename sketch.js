@@ -33,7 +33,7 @@ let sansImage
 
 //loads images
 function preload() {
-  sansImage = loadImage("/libraries/assets/sans.png");
+  sansImage = loadImage("/assets/sans.png");
 }
 
 function setup() {
