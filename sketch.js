@@ -483,18 +483,6 @@ function keyPressed() {
   }
 }
 
-
-function drawBattleBox() {
-  noFill();
-  stroke(255);
-  rect(battleBox.x, battleBox.y, battleBox.w, battleBox.h);
-}
-
-function drawHealth() {
-  fill(255, 0, 0);
-  rect(10, 10, health * 2, 10);
-}
-
 function bossFight() {
   background(0);
   

@@ -19,3 +19,6 @@ class Projectile {
     return this.x < 0 || this.x > width; // Check if the projectile is off the screen
   }
 }
+
+
+

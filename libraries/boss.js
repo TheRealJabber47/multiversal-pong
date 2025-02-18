@@ -23,6 +23,7 @@ class Boss {
       for (let i = 0; i < 10; i++) {
         attacks.push(new Attack(random(width), 0, 4, 'bone'));
         attacks.push(new Attack(random([0, width]), random(height), random([-3, 3]), 'blaster'));
+        attacks.push(new Attack(boss.x,boss.y, random([-3, 3]), 'spray'));
       }
     }
   }
