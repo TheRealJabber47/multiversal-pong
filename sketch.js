@@ -448,13 +448,10 @@ function rgbPicker() {
 
 function laserBall() {
   background(0);
-  fill(colorL)
   leftPaddle.display();
-  fill(colorR)
   rightPaddle.display();
   leftPaddle.updateProjectiles();
   rightPaddle.updateProjectiles();
-
   // Left paddle movement (W/S keys)
   if (keyIsDown(87)) { // 'W' key
     leftPaddle.move(-1);
