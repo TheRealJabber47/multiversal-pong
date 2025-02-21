@@ -36,7 +36,7 @@ let lives = 3;
 
 // loads images
 function preload() {
-  sansImage = loadImage('rideTheLightning.png');
+  sansImage = loadImage('rideTheLightning.jpg');
 }
 
 function setup() {
