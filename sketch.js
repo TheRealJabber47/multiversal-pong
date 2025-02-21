@@ -36,7 +36,7 @@ let lives = 3;
 
 // loads images
 function preload() {
-  sansImage = loadImage('/assets/sans.png');
+  sansImage = loadImage('/sans.png');
 }
 
 function setup() {
@@ -508,8 +508,8 @@ function bossFight() {
   for (let i = attacks.length - 1; i >= 0; i--) {
     attacks[i].update();
     attacks[i].display();
-    
     if (player.collides(attacks[i])) {
+      attacks.splice(i,1)
       lives--;
       if (lives <= 0) {
         gameOver = true;
