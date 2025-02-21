@@ -36,7 +36,7 @@ let lives = 3;
 
 // loads images
 function preload() {
-//   sansImage = loadImage("/assets/sans.png");
+  sansImage = loadImage('/assets/sans.png');
 }
 
 function setup() {
@@ -214,9 +214,9 @@ function drawSettingsButton() {
 }
 
 function drawSansButton() {
-  // // sans button
-  // sansImage.resize(25, 25)
-  // image(sansImage, 12.5, 12.5)
+  // sans button
+  sansImage.resize(25, 25)
+  image(sansImage, 12.5, 12.5)
 
 }
 

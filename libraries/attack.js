@@ -1,19 +1,16 @@
 class Attack {
-    constructor(x, y, speed, type) {
+    constructor(x, y, xSpeed, ySpeed, type) {
       this.x = x;
       this.y = y;
-      this.speed = speed;
+      this.xSpeed = xSpeed;
+      this.ySpeed = ySpeed;
       this.type = type;
       this.size = type === 'bone' ? 20 : 30;
     }
     
     update() {
-      if (this.type === 'bone') {
-        this.y += this.speed;
-      } else if (this.type === 'blaster'){
-        this.x += this.speed;
-      } else if (this.type === 'spray')
-        this.x += this.speed;
+        this.y += this.ySpeed;
+        this.x += this.xSpeed;
     }
     
     display() {
