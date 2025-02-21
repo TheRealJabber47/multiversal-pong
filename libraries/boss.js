@@ -1,14 +1,22 @@
 class Boss {
   constructor() {
     this.x = width / 2;
-    this.y = 50;
+    this.y = 50
     this.size = 40;
     this.timer = 0;
-    
+    this.move = random(1,4)
   }
 
   update() {
+    // if(frameCount % 120 == 0){
+    // move = random(1,4)
+    // }
+    // Math.floor(move)
+    // if(move = 1){
+
+    // }
     this.x += sin(frameCount * 0.05) * 2;
+    // this.y += sin(frameCount * 0.05) * 2;
     this.timer++;
     if (this.timer % 60 === 0) {
       this.attack();
@@ -18,6 +26,8 @@ class Boss {
   display() {
     fill(255, 0, 0);
     ellipse(this.x, this.y, this.size);
+    sansImage.resize(50, 50)
+    image(sansImage, this.x-this.size/2, this.y-this.size/2)
   }
 
   attack() {
