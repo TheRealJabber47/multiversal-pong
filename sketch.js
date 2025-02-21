@@ -36,7 +36,7 @@ let lives = 3;
 
 // loads images
 function preload() {
-  sansImage = loadImage('/sans.png');
+  sansImage = loadImage('sans.png');
 }
 
 function setup() {
