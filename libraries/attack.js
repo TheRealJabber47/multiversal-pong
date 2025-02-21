@@ -2,15 +2,14 @@ class Attack {
     constructor(x, y, xSpeed, ySpeed, type) {
       this.x = x;
       this.y = y;
-      this.xSpeed = xSpeed;
-      this.ySpeed = ySpeed;
+      this.speed = createVector(xSpeed, ySpeed)
       this.type = type;
       this.size = type === 'bone' ? 20 : 30;
     }
     
     update() {
-        this.y += this.ySpeed;
-        this.x += this.xSpeed;
+        this.y += this.speed.y;
+        this.x += this.speed.x;
     }
     
     display() {

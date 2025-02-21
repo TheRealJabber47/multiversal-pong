@@ -4,6 +4,7 @@ class Boss {
     this.y = 50;
     this.size = 40;
     this.timer = 0;
+    
   }
 
   update() {
